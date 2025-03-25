@@ -1,0 +1,10 @@
+{
+  "name": "drop-commerce",
+  "version": "1.0.0",
+  "description": "Platforma eCommerce do sprzedaży w trybie 'drop'",
+  "scripts": {
+    "setup": "bash scripts/setup-infra.sh",
+    "deploy:frontend": "bash scripts/deploy-frontend.sh",
+    "deploy:backend": "bash scripts/deploy-backend.sh"
+  }
+}

@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: websocket-deployment
+  namespace: drop-commerce
+  labels:
+    app: websocket
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: websocket
+  template:
+    metadata:
+      labels:
+        app: websocket
+    spec:
+      containers:
+      - name: websocket
+        image: gcr.io/[PROJECT_ID]/drop-commerce-websocket:latest
+        ports:
+        - containerPort: 4001
+        resources:
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+          requests:
+            cpu: "200m"
+            memory: "256Mi"
+        env:
+        - name: NODE_ENV
+          value: "production"
+        - name: WEBSOCKET_PORT
+          value: "4001"
+        - name: REDIS_URL
+          valueFrom:
+            secretKeyRef:
+              name: api-secrets
+              key: redis-url
+        - name: ALLOWED_ORIGINS
+          value: "https://seller.dropcommerce.pl,https://admin.dropcommerce.pl,https://*.drop.dropcommerce.pl"
+      imagePullSecrets:
+      - name: gcr-json-key
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: websocket-service
+  namespace: drop-commerce
