@@ -1,8 +1,15 @@
+// backend/services/inventory/services/reservationService.js
 const Reservation = require('../models/reservation');
 const inventoryService = require('./inventoryService');
 const logger = require('../utils/logger');
 
-// Utworzenie rezerwacji
+/**
+ * Tworzy nową rezerwację produktu
+ * @param {string} productId - ID produktu
+ * @param {number} quantity - Ilość rezerwowana
+ * @param {string} sessionId - ID sesji klienta
+ * @returns {Promise<Object>} - Obiekt rezerwacji
+ */
 exports.createReservation = async (productId, quantity, sessionId) => {
   try {
     // Pobierz stan magazynowy
@@ -39,7 +46,11 @@ exports.createReservation = async (productId, quantity, sessionId) => {
   }
 };
 
-// Pobranie rezerwacji
+/**
+ * Pobiera informacje o rezerwacji
+ * @param {string} reservationId - ID rezerwacji
+ * @returns {Promise<Object>} - Obiekt rezerwacji
+ */
 exports.getReservation = async (reservationId) => {
   try {
     return await Reservation.findById(reservationId).populate('product');
@@ -49,7 +60,12 @@ exports.getReservation = async (reservationId) => {
   }
 };
 
-// Potwierdzenie rezerwacji
+/**
+ * Potwierdza rezerwację po złożeniu zamówienia
+ * @param {string} reservationId - ID rezerwacji
+ * @param {string} orderId - ID zamówienia
+ * @returns {Promise<Object>} - Zaktualizowany obiekt rezerwacji
+ */
 exports.confirmReservation = async (reservationId, orderId) => {
   try {
     const reservation = await Reservation.findById(reservationId);
@@ -90,7 +106,11 @@ exports.confirmReservation = async (reservationId, orderId) => {
   }
 };
 
-// Anulowanie rezerwacji
+/**
+ * Anuluje rezerwację
+ * @param {string} reservationId - ID rezerwacji
+ * @returns {Promise<Object>} - Anulowany obiekt rezerwacji
+ */
 exports.cancelReservation = async (reservationId) => {
   try {
     const reservation = await Reservation.findById(reservationId);
@@ -124,3 +144,99 @@ exports.cancelReservation = async (reservationId) => {
     }
     
     return reservation;
+  } catch (error) {
+    logger.error(`Error cancelling reservation ${reservationId}:`, error);
+    throw error;
+  }
+};
+
+/**
+ * Pobiera aktywne rezerwacje dla produktu
+ * @param {string} productId - ID produktu
+ * @param {Object} options - Opcje paginacji
+ * @returns {Promise<Object>} - Obiekt z listą rezerwacji i metadanymi paginacji
+ */
+exports.getProductReservations = async (productId, options = {}) => {
+  try {
+    const query = { 
+      product: productId,
+      status: 'active'
+    };
+    
+    return await Reservation.paginate(query, options);
+  } catch (error) {
+    logger.error(`Error getting reservations for product ${productId}:`, error);
+    throw error;
+  }
+};
+
+/**
+ * Pobiera rezerwacje dla sprzedawcy
+ * @param {string} sellerId - ID sprzedawcy
+ * @param {Object} query - Dodatkowe kryteria zapytania
+ * @param {Object} options - Opcje paginacji
+ * @returns {Promise<Object>} - Obiekt z listą rezerwacji i metadanymi paginacji
+ */
+exports.getSellerReservations = async (sellerId, query = {}, options = {}) => {
+  try {
+    // Znajdź wszystkie produkty sprzedawcy
+    const inventory = await inventoryService.getSellerInventory(sellerId, {}, { pagination: false });
+    const productIds = inventory.docs.map(item => item.product);
+    
+    // Utwórz zapytanie o rezerwacje dla produktów sprzedawcy
+    const reservationQuery = {
+      product: { $in: productIds },
+      ...query
+    };
+    
+    return await Reservation.paginate(reservationQuery, options);
+  } catch (error) {
+    logger.error(`Error getting reservations for seller ${sellerId}:`, error);
+    throw error;
+  }
+};
+
+/**
+ * Aktualizuje status wygasłych rezerwacji
+ * Funkcja używana przez cron job
+ * @returns {Promise<number>} - Liczba zaktualizowanych rezerwacji
+ */
+exports.expireReservations = async () => {
+  try {
+    const now = new Date();
+    
+    // Znajdź wszystkie aktywne rezerwacje, które wygasły
+    const expiredReservations = await Reservation.find({
+      status: 'active',
+      expiresAt: { $lt: now }
+    });
+    
+    let processed = 0;
+    
+    // Anuluj każdą wygasłą rezerwację
+    for (const reservation of expiredReservations) {
+      try {
+        // Zaktualizuj status rezerwacji
+        reservation.status = 'expired';
+        await reservation.save();
+        
+        // Zwróć zarezerwowaną ilość do stanu magazynowego
+        const inventory = await inventoryService.getProductStock(reservation.product);
+        
+        await inventoryService.updateProductStock(reservation.product, {
+          reserved: Math.max(0, inventory.reserved - reservation.quantity)
+        });
+        
+        processed++;
+      } catch (error) {
+        logger.error(`Error processing expired reservation ${reservation._id}:`, error);
+      }
+    }
+    
+    logger.info(`Processed ${processed} expired reservations`);
+    return processed;
+  } catch (error) {
+    logger.error('Error expiring reservations:', error);
+    throw error;
+  }
+};
