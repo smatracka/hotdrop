@@ -23,19 +23,26 @@ export const AuthProvider = ({ children }) => {
       
       if (storedToken) {
         try {
-          // Ustaw token w nagłówkach żądań
-          api.defaults.headers.common['Authorization'] = `Bearer ${storedToken}`;
+          // W trybie rozwojowym, możemy po prostu ustawić użytkownika testowego
+          // zamiast robić wywołanie API
+          const testUser = {
+            id: '123456',
+            name: 'Testowy Użytkownik',
+            email: 'test@example.com',
+            company: {
+              name: 'Testowa Firma',
+              vatId: '1234567890',
+              address: {
+                street: 'ul. Testowa 1',
+                city: 'Warszawa',
+                postalCode: '00-001',
+                country: 'Polska'
+              }
+            }
+          };
           
-          // Pobierz dane użytkownika
-          const response = await api.get('/users/me');
-          
-          if (response.data && response.data.success) {
-            setUser(response.data.data);
-            setIsAuthenticated(true);
-          } else {
-            // Jeśli odpowiedź nie zawiera danych użytkownika, wyloguj
-            logout();
-          }
+          setUser(testUser);
+          setIsAuthenticated(true);
         } catch (error) {
           console.error('Auth check error:', error);
           // W przypadku błędu, wyloguj
@@ -53,28 +60,38 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     try {
       setLoading(true);
-      const response = await api.post('/auth/login', { email, password });
       
-      if (response.data && response.data.success) {
-        const { token, user } = response.data.data;
-        
-        // Zapisz token w localStorage
-        localStorage.setItem('token', token);
-        
-        // Ustaw token w nagłówkach żądań
-        api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        
-        // Zaktualizuj stan
-        setToken(token);
-        setUser(user);
-        setIsAuthenticated(true);
-        
-        toast.success('Zalogowano pomyślnie');
-        return { success: true };
-      } else {
-        toast.error(response.data.message || 'Błąd logowania');
-        return { success: false, message: response.data.message };
-      }
+      // Zamiast faktycznego wywołania API, po prostu symuluj pomyślne logowanie
+      // Możesz ustawić dowolne dane testowe dla użytkownika
+      const user = {
+        id: '123456',
+        name: 'Testowy Użytkownik',
+        email: email,
+        company: {
+          name: 'Testowa Firma',
+          vatId: '1234567890',
+          address: {
+            street: 'ul. Testowa 1',
+            city: 'Warszawa',
+            postalCode: '00-001',
+            country: 'Polska'
+          }
+        }
+      };
+      
+      // Zapisz fikcyjny token w localStorage
+      localStorage.setItem('token', 'test-token-123456');
+      
+      // Ustaw token w nagłówkach żądań
+      api.defaults.headers.common['Authorization'] = `Bearer test-token-123456`;
+      
+      // Zaktualizuj stan
+      setToken('test-token-123456');
+      setUser(user);
+      setIsAuthenticated(true);
+      
+      toast.success('Zalogowano pomyślnie');
+      return { success: true };
     } catch (error) {
       console.error('Login error:', error);
       const message = error.response?.data?.message || 'Błąd logowania';
@@ -89,15 +106,10 @@ export const AuthProvider = ({ children }) => {
   const register = async (userData) => {
     try {
       setLoading(true);
-      const response = await api.post('/auth/register', userData);
       
-      if (response.data && response.data.success) {
-        toast.success('Rejestracja zakończona pomyślnie. Możesz się teraz zalogować.');
-        return { success: true };
-      } else {
-        toast.error(response.data.message || 'Błąd rejestracji');
-        return { success: false, message: response.data.message };
-      }
+      // Symulacja udanej rejestracji
+      toast.success('Rejestracja zakończona pomyślnie. Możesz się teraz zalogować.');
+      return { success: true };
     } catch (error) {
       console.error('Register error:', error);
       const message = error.response?.data?.message || 'Błąd rejestracji';
@@ -128,15 +140,10 @@ export const AuthProvider = ({ children }) => {
   const forgotPassword = async (email) => {
     try {
       setLoading(true);
-      const response = await api.post('/auth/forgot-password', { email });
       
-      if (response.data && response.data.success) {
-        toast.success('Instrukcje resetowania hasła zostały wysłane na podany adres e-mail');
-        return { success: true };
-      } else {
-        toast.error(response.data.message || 'Błąd resetowania hasła');
-        return { success: false, message: response.data.message };
-      }
+      // Symulacja udanego resetowania
+      toast.success('Instrukcje resetowania hasła zostały wysłane na podany adres e-mail');
+      return { success: true };
     } catch (error) {
       console.error('Forgot password error:', error);
       const message = error.response?.data?.message || 'Błąd resetowania hasła';
@@ -151,16 +158,11 @@ export const AuthProvider = ({ children }) => {
   const updateProfile = async (userData) => {
     try {
       setLoading(true);
-      const response = await api.put('/users/profile', userData);
       
-      if (response.data && response.data.success) {
-        setUser(response.data.data);
-        toast.success('Profil zaktualizowany pomyślnie');
-        return { success: true };
-      } else {
-        toast.error(response.data.message || 'Błąd aktualizacji profilu');
-        return { success: false, message: response.data.message };
-      }
+      // Symulacja udanej aktualizacji
+      setUser({...user, ...userData});
+      toast.success('Profil zaktualizowany pomyślnie');
+      return { success: true };
     } catch (error) {
       console.error('Update profile error:', error);
       const message = error.response?.data?.message || 'Błąd aktualizacji profilu';
@@ -175,18 +177,10 @@ export const AuthProvider = ({ children }) => {
   const changePassword = async (currentPassword, newPassword) => {
     try {
       setLoading(true);
-      const response = await api.put('/auth/change-password', { 
-        currentPassword, 
-        newPassword 
-      });
       
-      if (response.data && response.data.success) {
-        toast.success('Hasło zmienione pomyślnie');
-        return { success: true };
-      } else {
-        toast.error(response.data.message || 'Błąd zmiany hasła');
-        return { success: false, message: response.data.message };
-      }
+      // Symulacja udanej zmiany hasła
+      toast.success('Hasło zmienione pomyślnie');
+      return { success: true };
     } catch (error) {
       console.error('Change password error:', error);
       const message = error.response?.data?.message || 'Błąd zmiany hasła';

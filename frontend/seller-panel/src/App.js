@@ -18,6 +18,7 @@ import Dashboard from './pages/Dashboard';
 import DropsList from './pages/Drops/DropsList';
 import NewDrop from './pages/Drops/NewDrop';
 import EditDrop from './pages/Drops/EditDrop';
+import PreviewDrop from './pages/Drops/PreviewDrop';
 import ProductsList from './pages/Products/ProductsList';
 import NewProduct from './pages/Products/NewProduct';
 import EditProduct from './pages/Products/EditProduct';
@@ -127,6 +128,8 @@ function App() {
               <Route path="/drops" element={<DropsList />} />
               <Route path="/drops/new" element={<NewDrop />} />
               <Route path="/drops/:id" element={<EditDrop />} />
+              {/* Strona podglądu dropu - dostępna bez logowania */}
+<Route path="/preview/drops/:id" element={<PreviewDrop />} />
               
               {/* Products */}
               <Route path="/products" element={<ProductsList />} />

@@ -21,13 +21,14 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { pl } from 'date-fns/locale';
-import { format, addMinutes, addHours, addDays, isAfter } from 'date-fns';
+import { addMinutes, isAfter } from 'date-fns';
 
 const DropAvailability = ({ data, onUpdate }) => {
   const [availabilityType, setAvailabilityType] = useState(data.startDate ? 'scheduled' : 'immediate');
-  const [startDate, setStartDate] = useState(data.startDate || new Date());
+  const [startDate, setStartDate] = useState(data.startDate ? new Date(data.startDate) : new Date());
   const [endDate, setEndDate] = useState(
-    data.endDate || addMinutes(data.startDate || new Date(), data.timeLimit || 10)
+    data.endDate ? new Date(data.endDate) : 
+    addMinutes(data.startDate ? new Date(data.startDate) : new Date(), data.timeLimit || 10)
   );
   const [showCustomEndDate, setShowCustomEndDate] = useState(!!data.endDate);
   const [notifyCustomers, setNotifyCustomers] = useState(true);
@@ -92,6 +93,21 @@ const DropAvailability = ({ data, onUpdate }) => {
     
     onUpdate(updateData);
   }, [startDate, endDate, showCustomEndDate, onUpdate]);
+  
+  // Pomocnicza funkcja do bezpiecznego formatowania daty
+  const formatDate = (date) => {
+    if (!date) return '';
+    try {
+      const dateObj = new Date(date);
+      return dateObj.toLocaleDateString('pl-PL') + ' o ' + dateObj.toLocaleTimeString('pl-PL', { 
+        hour: '2-digit', 
+        minute: '2-digit' 
+      });
+    } catch (error) {
+      console.error('Error formatting date:', error);
+      return String(date);
+    }
+  };
   
   return (
     <Box>
@@ -231,9 +247,9 @@ const DropAvailability = ({ data, onUpdate }) => {
         <Grid item xs={12}>
           <Collapse in={availabilityType === 'scheduled'}>
             <Alert severity="info" sx={{ mt: 2 }}>
-              Drop rozpocznie się {format(startDate, 'dd.MM.yyyy o HH:mm')} i 
+              Drop rozpocznie się {formatDate(startDate)} i 
               {showCustomEndDate 
-                ? ` zakończy się ${format(endDate, 'dd.MM.yyyy o HH:mm')}` 
+                ? ` zakończy się ${formatDate(endDate)}` 
                 : ` będzie trwał ${data.timeLimit || 10} minut`}.
             </Alert>
           </Collapse>
