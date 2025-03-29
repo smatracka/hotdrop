@@ -1,105 +1,34 @@
-// backend/api/utils/helpers.js
-const crypto = require('crypto');
-const slugify = require('slugify');
-
 /**
- * Generuje losowy token
+ * Formatuje datę do wyświetlenia
  * 
- * @param {number} length - Długość tokena
- * @returns {string} - Wygenerowany token
+ * @param {Date|string} date - Data do sformatowania
+ * @param {string} format - Format (short, long, datetime)
+ * @returns {string} - Sformatowana data
  */
-const generateToken = (length = 32) => {
-  return crypto.randomBytes(length).toString('hex');
-};
-
-/**
- * Generuje slug z podanego tekstu
- * 
- * @param {string} text - Tekst do przekształcenia
- * @returns {string} - Wygenerowany slug
- */
-const generateSlug = (text) => {
-  const slug = slugify(text, {
-    lower: true,
-    strict: true,
-    locale: 'pl',
-    remove: /[*+~.()'"!:@]/g
-  });
+export const formatDate = (date, format = 'short') => {
+  if (!date) return '';
   
-  // Dodaj losowy sufiks, aby uniknąć kolizji
-  const timestamp = Date.now().toString(36);
-  const randomString = Math.random().toString(36).substring(2, 5);
+  const dateObj = new Date(date);
   
-  return `${slug}-${timestamp}${randomString}`;
-};
-
-/**
- * Paginuje wyniki zapytania
- * 
- * @param {Object} query - Zapytanie Mongoose
- * @param {Object} options - Opcje paginacji
- * @param {number} options.page - Numer strony (1-indexed)
- * @param {number} options.limit - Liczba elementów na stronę
- * @returns {Promise<Object>} - Wyniki z paginacją
- */
-const paginate = async (query, { page = 1, limit = 10 }) => {
-  const startIndex = (page - 1) * limit;
-  const endIndex = page * limit;
-  
-  const results = {};
-  results.page = page;
-  results.limit = limit;
-  
-  if (startIndex > 0) {
-    results.previousPage = page - 1;
+  switch (format) {
+    case 'short':
+      return dateObj.toLocaleDateString('pl-PL');
+    case 'long':
+      return dateObj.toLocaleDateString('pl-PL', { 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+      });
+    case 'datetime':
+      return dateObj.toLocaleString('pl-PL');
+    case 'time':
+      return dateObj.toLocaleTimeString('pl-PL', { 
+        hour: '2-digit', 
+        minute: '2-digit' 
+      });
+    default:
+      return dateObj.toLocaleDateString('pl-PL');
   }
-  
-  const totalCount = await query.model.countDocuments(query._conditions);
-  results.totalPages = Math.ceil(totalCount / limit);
-  
-  if (endIndex < totalCount) {
-    results.nextPage = page + 1;
-  }
-  
-  results.data = await query.skip(startIndex).limit(limit);
-  results.totalCount = totalCount;
-  
-  return results;
-};
-
-/**
- * Filtruje pola obiektu
- * 
- * @param {Object} obj - Obiekt do filtrowania
- * @param {Array} allowedFields - Dozwolone pola
- * @returns {Object} - Przefiltrowany obiekt
- */
-const filterObject = (obj, allowedFields) => {
-  const newObj = {};
-  Object.keys(obj).forEach(key => {
-    if (allowedFields.includes(key)) {
-      newObj[key] = obj[key];
-    }
-  });
-  return newObj;
-};
-
-/**
- * Generuje kod referencyjny
- * 
- * @param {string} prefix - Prefiks kodu
- * @param {number} length - Długość części numerycznej
- * @returns {string} - Wygenerowany kod
- */
-const generateReferenceCode = (prefix, length = 6) => {
-  const characters = '0123456789';
-  let result = prefix;
-  
-  for (let i = 0; i < length; i++) {
-    result += characters.charAt(Math.floor(Math.random() * characters.length));
-  }
-  
-  return result;
 };
 
 /**
@@ -109,7 +38,7 @@ const generateReferenceCode = (prefix, length = 6) => {
  * @param {string} currency - Waluta (domyślnie PLN)
  * @returns {string} - Sformatowana cena
  */
-const formatPrice = (price, currency = 'PLN') => {
+export const formatPrice = (price, currency = 'PLN') => {
   if (typeof price !== 'number') {
     return '';
   }
@@ -121,94 +50,154 @@ const formatPrice = (price, currency = 'PLN') => {
 };
 
 /**
- * Weryfikuje czy adres email jest poprawny
+ * Skraca tekst do określonej długości
  * 
- * @param {string} email - Adres email do weryfikacji
- * @returns {boolean} - Czy adres jest poprawny
+ * @param {string} text - Tekst do skrócenia
+ * @param {number} maxLength - Maksymalna długość
+ * @returns {string} - Skrócony tekst
  */
-const isValidEmail = (email) => {
-  const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return re.test(String(email).toLowerCase());
-};
-
-/**
- * Generuje losowe hasło
- * 
- * @param {number} length - Długość hasła
- * @returns {string} - Wygenerowane hasło
- */
-const generatePassword = (length = 10) => {
-  const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  const lowercase = 'abcdefghijklmnopqrstuvwxyz';
-  const numbers = '0123456789';
-  const symbols = '!@#$%^&*()_+[]{}|;:,.<>?';
-  
-  const allChars = uppercase + lowercase + numbers + symbols;
-  
-  let password = '';
-  // Upewnij się, że hasło zawiera co najmniej jeden znak z każdej kategorii
-  password += uppercase.charAt(Math.floor(Math.random() * uppercase.length));
-  password += lowercase.charAt(Math.floor(Math.random() * lowercase.length));
-  password += numbers.charAt(Math.floor(Math.random() * numbers.length));
-  password += symbols.charAt(Math.floor(Math.random() * symbols.length));
-  
-  // Dodaj pozostałe znaki
-  for (let i = 4; i < length; i++) {
-    password += allChars.charAt(Math.floor(Math.random() * allChars.length));
+export const truncateText = (text, maxLength = 50) => {
+  if (!text || text.length <= maxLength) {
+    return text;
   }
   
-  // Pomieszaj znaki
-  return password.split('').sort(() => Math.random() - 0.5).join('');
+  return text.substring(0, maxLength) + '...';
 };
 
 /**
- * Hashuje hasło
+ * Generuje kontrast dla koloru tła
  * 
- * @param {string} password - Hasło do zahashowania
- * @returns {string} - Zahashowane hasło
+ * @param {string} bgColor - Kolor tła (hex)
+ * @returns {string} - Kolor tekstu (black lub white)
  */
-const hashPassword = (password) => {
-  const salt = crypto.randomBytes(16).toString('hex');
-  const hash = crypto.pbkdf2Sync(password, salt, 1000, 64, 'sha512').toString('hex');
+export const getContrastColor = (bgColor) => {
+  // Usuń # jeśli istnieje
+  const color = bgColor.startsWith('#') ? bgColor.substring(1) : bgColor;
   
-  return `${salt}:${hash}`;
-};
-
-/**
- * Weryfikuje hasło
- * 
- * @param {string} password - Hasło do weryfikacji
- * @param {string} hashedPassword - Zahashowane hasło
- * @returns {boolean} - Czy hasło jest poprawne
- */
-const verifyPassword = (password, hashedPassword) => {
-  const [salt, hash] = hashedPassword.split(':');
-  const verifyHash = crypto.pbkdf2Sync(password, salt, 1000, 64, 'sha512').toString('hex');
+  // Przekształć do RGB
+  let r, g, b;
   
-  return hash === verifyHash;
+  if (color.length === 3) {
+    r = parseInt(color[0] + color[0], 16);
+    g = parseInt(color[1] + color[1], 16);
+    b = parseInt(color[2] + color[2], 16);
+  } else if (color.length === 6) {
+    r = parseInt(color.substring(0, 2), 16);
+    g = parseInt(color.substring(2, 4), 16);
+    b = parseInt(color.substring(4, 6), 16);
+  } else {
+    return '#000000'; // Domyślnie czarny dla nieprawidłowego formatu
+  }
+  
+  // Oblicz luminancję
+  const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+  
+  // Zwróć biały lub czarny w zależności od luminancji
+  return luminance > 0.5 ? '#000000' : '#FFFFFF';
 };
 
 /**
- * Generuje unikalne ID transakcji
- * 
- * @returns {string} - Unikalne ID transakcji
+ * Generuje unikalny ID
+ * @returns {string} - Unikalny ID
  */
-const generateTransactionId = () => {
-  const timestamp = Date.now().toString(36);
-  const randomStr = Math.random().toString(36).substring(2, 10);
-  return `TXN-${timestamp}-${randomStr}`.toUpperCase();
+export const generateUniqueId = () => {
+  return Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
 };
 
-module.exports = {
-  generateToken,
-  generateSlug,
-  paginate,
-  filterObject,
-  generateReferenceCode,
+/**
+ * Filtruje pola obiektu
+ * 
+ * @param {Object} obj - Obiekt do filtrowania
+ * @param {Array} allowedFields - Dozwolone pola
+ * @returns {Object} - Przefiltrowany obiekt
+ */
+export const filterObject = (obj, allowedFields) => {
+  const newObj = {};
+  Object.keys(obj).forEach(key => {
+    if (allowedFields.includes(key)) {
+      newObj[key] = obj[key];
+    }
+  });
+  return newObj;
+};
+
+/**
+ * Pobiera wartość z zagnieżdżonego obiektu
+ * 
+ * @param {Object} obj - Obiekt
+ * @param {string} path - Ścieżka do wartości (np. "user.address.city")
+ * @param {*} defaultValue - Wartość domyślna
+ * @returns {*} - Pobrana wartość lub wartość domyślna
+ */
+export const getNestedValue = (obj, path, defaultValue = '') => {
+  if (!obj || !path) return defaultValue;
+  
+  const keys = path.split('.');
+  let value = obj;
+  
+  for (const key of keys) {
+    if (value === null || value === undefined || !Object.prototype.hasOwnProperty.call(value, key)) {
+      return defaultValue;
+    }
+    value = value[key];
+  }
+  
+  return value === null || value === undefined ? defaultValue : value;
+};
+
+/**
+ * Konwertuje obiekt na parametry URL
+ * 
+ * @param {Object} params - Obiekt z parametrami
+ * @returns {string} - Ciąg parametrów URL
+ */
+export const objectToQueryString = (params) => {
+  return Object.keys(params)
+    .filter(key => params[key] !== undefined && params[key] !== null && params[key] !== '')
+    .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
+    .join('&');
+};
+
+/**
+ * Pobiera różnicę między dwoma datami w dniach
+ * 
+ * @param {Date|string} date1 - Pierwsza data
+ * @param {Date|string} date2 - Druga data
+ * @returns {number} - Różnica w dniach
+ */
+export const getDaysBetween = (date1, date2) => {
+  const d1 = new Date(date1);
+  const d2 = new Date(date2);
+  
+  // Konwertuj milisekundy na dni
+  return Math.round(Math.abs((d1 - d2) / (1000 * 60 * 60 * 24)));
+};
+
+/**
+ * Sprawdza, czy dwie daty są tego samego dnia
+ * 
+ * @param {Date|string} date1 - Pierwsza data
+ * @param {Date|string} date2 - Druga data
+ * @returns {boolean} - Czy daty są tego samego dnia
+ */
+export const isSameDay = (date1, date2) => {
+  const d1 = new Date(date1);
+  const d2 = new Date(date2);
+  
+  return d1.getDate() === d2.getDate() && 
+         d1.getMonth() === d2.getMonth() && 
+         d1.getFullYear() === d2.getFullYear();
+};
+
+export default {
+  formatDate,
   formatPrice,
-  isValidEmail,
-  generatePassword,
-  hashPassword,
-  verifyPassword,
-  generateTransactionId
+  truncateText,
+  getContrastColor,
+  generateUniqueId,
+  filterObject,
+  getNestedValue,
+  objectToQueryString,
+  getDaysBetween,
+  isSameDay
 };
