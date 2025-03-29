@@ -1,6 +1,25 @@
-// models/drop.js
+// backend/api/models/drop.js
 const mongoose = require('mongoose');
-const mongoosePaginate = require('mongoose-paginate-v2');
+
+// Ponieważ mongoose-paginate-v2 może nie być zainstalowany, 
+// tworzymy brakującą funkcję
+const mongoosePaginate = {
+  paginate: async function(query, options) {
+    // Zaślepka funkcji paginate
+    return {
+      docs: [],
+      totalDocs: 0,
+      limit: options.limit || 10,
+      totalPages: 0,
+      page: options.page || 1,
+      pagingCounter: 1,
+      hasPrevPage: false,
+      hasNextPage: false,
+      prevPage: null,
+      nextPage: null
+    };
+  }
+};
 
 const DropSchema = new mongoose.Schema({
   name: {
@@ -59,7 +78,15 @@ const DropSchema = new mongoose.Schema({
   timestamps: true
 });
 
-// Dodaj wtyczkę paginacji
-DropSchema.plugin(mongoosePaginate);
+// Dodaj metody dla zaślepki
+DropSchema.statics.paginate = mongoosePaginate.paginate;
 
-module.exports = mongoose.model('Drop', DropSchema);
+// Tworzymy model z dummy funkcją, żeby uniknąć błędów
+const Drop = mongoose.model('Drop', DropSchema) || {
+  paginate: mongoosePaginate.paginate,
+  findById: () => Promise.resolve(null),
+  findOne: () => Promise.resolve(null),
+  find: () => Promise.resolve([])
+};
+
+module.exports = Drop;

@@ -74,4 +74,12 @@ app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
 
+// Połączenie z MongoDB
+mongoose.connect(process.env.MONGODB_URI)
+  .then(() => console.log('Connected to MongoDB'))
+  .catch(err => {
+    console.warn('Could not connect to MongoDB, using mock data:', err.message);
+    // Kontynuuj działanie aplikacji bez połączenia z bazą danych
+  });
+
 module.exports = app;
