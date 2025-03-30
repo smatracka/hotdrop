@@ -1,0 +1,173 @@
+/* Główny kontener strony */
+.not-found-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Zawartość główna */
+.not-found-content {
+  flex: 1 0 auto;
+  padding: 60px 0;
+  background-color: #f9fafb;
+}
+
+/* Kontener treści */
+.not-found-container {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  padding: 40px;
+}
+
+/* Kod błędu */
+.error-code {
+  font-size: 120px;
+  font-weight: 800;
+  color: #e5e7eb;
+  line-height: 1;
+  margin-bottom: 24px;
+}
+
+/* Tytuł strony */
+.not-found-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 16px;
+}
+
+/* Komunikat o błędzie */
+.not-found-message {
+  font-size: 16px;
+  color: #6b7280;
+  margin-bottom: 32px;
+  line-height: 1.6;
+}
+
+/* Akcje */
+.not-found-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+/* Główny przycisk */
+.primary-button {
+  padding: 12px 24px;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  text-decoration: none;
+  display: inline-block;
+  margin-bottom: 16px;
+}
+
+.primary-button:hover {
+  background-color: #1d4ed8;
+}
+
+/* Dodatkowe akcje */
+.secondary-actions {
+  display: flex;
+  gap: 24px;
+}
+
+/* Link drugorzędny */
+.secondary-link {
+  color: #6b7280;
+  font-size: 14px;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.secondary-link:hover {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+/* Sugestie */
+.not-found-suggestions {
+  text-align: left;
+  background-color: #f9fafb;
+  padding: 16px 24px;
+  border-radius: 8px;
+}
+
+/* Tytuł sugestii */
+.not-found-suggestions h2 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 12px;
+}
+
+/* Lista sugestii */
+.not-found-suggestions ul {
+  padding-left: 20px;
+  margin: 0;
+}
+
+.not-found-suggestions li {
+  font-size: 14px;
+  color: #4b5563;
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+.not-found-suggestions li:last-child {
+  margin-bottom: 0;
+}
+
+/* Responsywność */
+@media (max-width: 768px) {
+  .not-found-content {
+    padding: 40px 0;
+  }
+  
+  .not-found-container {
+    padding: 32px 24px;
+  }
+  
+  .error-code {
+    font-size: 100px;
+    margin-bottom: 16px;
+  }
+  
+  .not-found-title {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .not-found-content {
+    padding: 24px 0;
+  }
+  
+  .not-found-container {
+    padding: 24px 16px;
+  }
+  
+  .error-code {
+    font-size: 80px;
+    margin-bottom: 12px;
+  }
+  
+  .not-found-title {
+    font-size: 20px;
+  }
+  
+  .secondary-actions {
+    flex-direction: column;
+    gap: 12px;
+  }
+}

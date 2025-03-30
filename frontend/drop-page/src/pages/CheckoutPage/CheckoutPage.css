@@ -1,0 +1,399 @@
+/* Główny kontener strony */
+.checkout-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Zawartość główna */
+.checkout-content {
+  flex: 1 0 auto;
+  padding: 40px 0;
+}
+
+/* Tytuł strony */
+.checkout-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 32px;
+  color: #111827;
+}
+
+/* Układ strony checkout */
+.checkout-grid {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 24px;
+}
+
+/* Sekcje checkout */
+.checkout-section {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+/* Tytuł sekcji */
+.section-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* Lista produktów w koszyku */
+.cart-items {
+  margin-bottom: 24px;
+}
+
+/* Pojedynczy produkt w koszyku */
+.cart-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.cart-item:last-child {
+  border-bottom: none;
+}
+
+/* Obrazek produktu */
+.cart-item-image {
+  width: 60px;
+  height: 60px;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-right: 12px;
+}
+
+.cart-item-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Szczegóły produktu */
+.cart-item-details {
+  flex-grow: 1;
+}
+
+/* Nazwa produktu */
+.cart-item-name {
+  font-size: 16px;
+  font-weight: 500;
+  color: #111827;
+  margin-bottom: 4px;
+}
+
+/* Cena produktu */
+.cart-item-price {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+/* Suma dla produktu */
+.cart-item-total {
+  font-weight: 600;
+  color: #111827;
+}
+
+/* Podsumowanie zamówienia */
+.order-totals {
+  border-top: 1px solid #e5e7eb;
+  padding-top: 16px;
+}
+
+/* Wiersz w podsumowaniu */
+.order-total-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+/* Suma końcowa */
+.order-total-sum {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  padding-top: 8px;
+  border-top: 1px dashed #e5e7eb;
+  margin-top: 8px;
+}
+
+/* Informacje o prepaidzie */
+.prepaid-info {
+  margin-bottom: 16px;
+}
+
+/* Kwota prepaidu */
+.prepaid-amount {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 500;
+  color: #111827;
+  margin-bottom: 16px;
+}
+
+.prepaid-amount .amount {
+  font-size: 24px;
+  font-weight: 700;
+  color: #10b981;
+}
+
+/* Szczegóły prepaidu */
+.prepaid-details {
+  background-color: #f9fafb;
+  padding: 16px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+/* Wiersz szczegółów prepaidu */
+.prepaid-details > div {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.prepaid-details > div:last-child {
+  margin-bottom: 0;
+}
+
+/* Status środków */
+.funds-status {
+  padding: 12px;
+  border-radius: 6px;
+  text-align: center;
+  font-weight: 500;
+  margin-top: 16px;
+}
+
+/* Wystarczające środki */
+.funds-ok {
+  background-color: #d1fae5;
+  color: #047857;
+}
+
+/* Niewystarczające środki */
+.funds-not-enough {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+/* Adres dostawy */
+.shipping-address {
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+/* Link do edycji */
+.edit-link {
+  color: #2563eb;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.edit-link:hover {
+  text-decoration: underline;
+}
+
+/* Podsumowanie finalne */
+.final-summary {
+  margin-bottom: 24px;
+}
+
+/* Wiersz podsumowania */
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: #4b5563;
+}
+
+/* Przycisk potwierdzenia zamówienia */
+.confirm-order-button {
+  width: 100%;
+  padding: 12px 16px;
+  background-color: #10b981;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-bottom: 16px;
+}
+
+.confirm-order-button:hover {
+  background-color: #059669;
+}
+
+.confirm-order-button:disabled {
+  background-color: #d1d5db;
+  cursor: not-allowed;
+}
+
+/* Ostrzeżenie o braku środków */
+.not-enough-funds-warning {
+  background-color: #fee2e2;
+  color: #b91c1c;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+/* Powrót do koszyka */
+.back-to-cart {
+  text-align: center;
+}
+
+/* Przycisk powrotu */
+.back-button {
+  background: none;
+  border: none;
+  color: #6b7280;
+  font-size: 14px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.back-button:hover {
+  color: #4b5563;
+}
+
+/* Stany ładowania */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  text-align: center;
+}
+
+.loading-spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid rgba(37, 99, 235, 0.1);
+  border-radius: 50%;
+  border-left-color: #2563eb;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Komunikaty błędu */
+.error-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  text-align: center;
+  padding: 32px;
+  background-color: #fef2f2;
+  border-radius: 12px;
+}
+
+.error-icon {
+  color: #ef4444;
+  margin-bottom: 16px;
+}
+
+.error-container h2 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #111827;
+}
+
+.error-container p {
+  margin-bottom: 24px;
+  color: #4b5563;
+}
+
+/* Komunikat o braku danych */
+.not-found-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  text-align: center;
+  padding: 32px;
+  background-color: #f9fafb;
+  border-radius: 12px;
+}
+
+.not-found-container h2 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #111827;
+}
+
+.not-found-container p {
+  margin-bottom: 24px;
+  color: #4b5563;
+}
+
+/* Responsywność */
+@media (max-width: 768px) {
+  .checkout-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .checkout-title {
+    font-size: 24px;
+  }
+  
+  .prepaid-amount {
+    font-size: 16px;
+  }
+  
+  .prepaid-amount .amount {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .checkout-content {
+    padding: 24px 0;
+  }
+  
+  .checkout-section {
+    padding: 16px;
+  }
+  
+  .checkout-title {
+    font-size: 20px;
+    margin-bottom: 24px;
+  }
+  
+  .cart-item {
+    flex-wrap: wrap;
+  }
+  
+  .cart-item-total {
+    width: 100%;
+    margin-top: 8px;
+    text-align: right;
+  }
+}

@@ -1,0 +1,251 @@
+/* Nagłówek strony */
+.page-header {
+  background-color: white;
+  border-bottom: 1px solid #e5e7eb;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Kontener zawartości nagłówka */
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+}
+
+/* Logo */
+.logo {
+  font-size: 24px;
+  font-weight: 700;
+  color: #2563eb;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.logo:hover {
+  color: #1d4ed8;
+}
+
+/* Główna nawigacja */
+.main-nav {
+  display: flex;
+}
+
+/* Lista elementów nawigacji */
+.nav-list {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  gap: 24px;
+}
+
+/* Element nawigacji */
+.nav-item {
+  display: flex;
+  align-items: center;
+}
+
+/* Link w nawigacji */
+.nav-link {
+  color: #4b5563;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 8px 0;
+  transition: color 0.2s;
+  position: relative;
+}
+
+.nav-link:hover {
+  color: #2563eb;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #2563eb;
+  transition: width 0.2s;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* Aktywny link */
+.nav-link.active {
+  color: #2563eb;
+}
+
+.nav-link.active::after {
+  width: 100%;
+}
+
+/* Akcje w nagłówku (koszyk, użytkownik, logowanie) */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Link do koszyka */
+.cart-link {
+  position: relative;
+  color: #4b5563;
+  transition: color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+}
+
+.cart-link:hover {
+  color: #2563eb;
+}
+
+/* Liczba produktów w koszyku */
+.cart-count {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #ef4444;
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Menu użytkownika */
+.user-menu {
+  position: relative;
+}
+
+/* Przycisk menu użytkownika */
+.user-menu-button {
+  background: none;
+  border: none;
+  color: #4b5563;
+  cursor: pointer;
+  padding: 8px;
+  transition: color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-menu-button:hover {
+  color: #2563eb;
+}
+
+/* Rozwijane menu użytkownika */
+.user-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 200px;
+  padding: 8px 0;
+  margin-top: 8px;
+  display: none;
+  z-index: 10;
+}
+
+.user-menu:hover .user-dropdown {
+  display: block;
+}
+
+/* Element rozwijanego menu */
+.dropdown-item {
+  display: block;
+  padding: 8px 16px;
+  color: #4b5563;
+  text-decoration: none;
+  transition: background-color 0.2s;
+  font-size: 14px;
+}
+
+.dropdown-item:hover {
+  background-color: #f3f4f6;
+  color: #2563eb;
+}
+
+/* Przycisk wylogowania */
+.logout-button {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 8px 16px;
+  color: #ef4444;
+  transition: background-color 0.2s;
+}
+
+.logout-button:hover {
+  background-color: #fef2f2;
+}
+
+/* Przyciski logowania i rejestracji */
+.auth-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+/* Przycisk logowania */
+.login-button {
+  padding: 8px 16px;
+  color: #2563eb;
+  background-color: transparent;
+  border: 1px solid #2563eb;
+  border-radius: 6px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.login-button:hover {
+  background-color: #eff6ff;
+}
+
+/* Przycisk rejestracji */
+.register-button {
+  padding: 8px 16px;
+  color: white;
+  background-color: #2563eb;
+  border: 1px solid #2563eb;
+  border-radius: 6px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.register-button:hover {
+  background-color: #1d4ed8;
+}
+
+/* Responsywność */
+@media (max-width: 768px) {
+  .main-nav {
+    display: none;
+  }
+  
+  .auth-buttons {
+    display: none;
+  }
+  
+  /* Tutaj można dodać kod dla menu mobilnego */
+}

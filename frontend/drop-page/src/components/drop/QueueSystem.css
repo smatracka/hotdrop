@@ -1,0 +1,183 @@
+/* Główny kontener systemu kolejkowego */
+.queue-system {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.95);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  z-index: 1000;
+}
+
+/* Karta z informacjami o kolejce */
+.queue-card {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+  padding: 32px;
+  width: 100%;
+  max-width: 480px;
+  text-align: center;
+}
+
+/* Tytuł */
+.queue-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 0 16px 0;
+  color: #2563eb;
+}
+
+/* Opis */
+.queue-description {
+  margin: 0 0 32px 0;
+  color: #666;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* Kontener paska postępu */
+.queue-progress-container {
+  margin-bottom: 32px;
+}
+
+/* Pasek postępu */
+.queue-progress {
+  height: 8px;
+  background-color: #f3f4f6;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+/* Wypełnienie paska postępu */
+.queue-progress-bar {
+  height: 100%;
+  background-color: #2563eb;
+  border-radius: 4px;
+  transition: width 1s ease;
+}
+
+/* Szczegóły kolejki (pozycja, liczba osób) */
+.queue-details {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: #666;
+}
+
+/* Pozycja w kolejce */
+.queue-position, .queue-total {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Etykiety */
+.queue-label {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+/* Wartości */
+.queue-value {
+  font-size: 18px;
+  font-weight: 700;
+  color: #333;
+}
+
+/* Informacja o czasie oczekiwania */
+.queue-wait-time {
+  background-color: #f0f9ff;
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+/* Ikona zegara */
+.queue-wait-icon {
+  margin-right: 16px;
+  color: #2563eb;
+}
+
+/* Tekst czasu oczekiwania */
+.queue-wait-text {
+  text-align: left;
+}
+
+/* Etykieta czasu oczekiwania */
+.queue-wait-label {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+/* Wartość czasu oczekiwania */
+.queue-wait-value {
+  font-size: 18px;
+  font-weight: 700;
+  color: #333;
+}
+
+/* Wskazówka */
+.queue-tip {
+  font-size: 14px;
+  color: #666;
+  background-color: #fffbeb;
+  border-radius: 8px;
+  padding: 12px;
+  border-left: 4px solid #f59e0b;
+  text-align: left;
+  margin-bottom: 16px;
+}
+
+/* Informacja o odświeżaniu */
+.queue-refreshing {
+  font-size: 14px;
+  color: #666;
+  height: 20px;
+}
+
+/* Animacja migania przy odświeżaniu */
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+.queue-refreshing:not(:empty) {
+  animation: blink 1.5s infinite;
+}
+
+/* Responsywność */
+@media (max-width: 480px) {
+  .queue-card {
+    padding: 24px 16px;
+  }
+  
+  .queue-title {
+    font-size: 20px;
+  }
+  
+  .queue-description,
+  .queue-wait-label,
+  .queue-tip {
+    font-size: 14px;
+  }
+  
+  .queue-label {
+    font-size: 12px;
+  }
+  
+  .queue-value,
+  .queue-wait-value {
+    font-size: 16px;
+  }
+}

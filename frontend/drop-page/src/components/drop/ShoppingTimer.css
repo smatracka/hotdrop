@@ -1,0 +1,138 @@
+/* Główny kontener timera zakupowego */
+.shopping-timer {
+  background-color: #2563eb;
+  color: white;
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s;
+}
+
+/* Nagłówek timera */
+.shopping-timer-header {
+  margin-bottom: 8px;
+}
+
+/* Tytuł timera */
+.shopping-timer-title {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Wartość timera (czas) */
+.shopping-timer-value {
+  font-size: 32px;
+  font-weight: 700;
+  font-family: 'Roboto Mono', monospace, sans-serif;
+  margin-bottom: 8px;
+}
+
+/* Pasek postępu */
+.shopping-timer-bar {
+  height: 6px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+/* Wypełnienie paska postępu */
+.shopping-timer-progress {
+  height: 100%;
+  background-color: white;
+  border-radius: 3px;
+  transition: width 1s linear;
+}
+
+/* Tekst ostrzeżenia */
+.shopping-timer-warning {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+/* Stan ostrzeżenia (mniej niż warningTime) */
+.shopping-timer--warning {
+  background-color: #f59e0b;
+  animation: pulse 2s infinite;
+}
+
+/* Stan krytyczny (mniej niż 30 sekund) */
+.shopping-timer--critical {
+  background-color: #ef4444;
+  animation: pulse 1s infinite;
+}
+
+/* Animacja pulsowania */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+  }
+}
+
+/* Rozmiary timerów */
+
+/* Mały timer */
+.shopping-timer--small .shopping-timer-title {
+  font-size: 12px;
+}
+
+.shopping-timer--small .shopping-timer-value {
+  font-size: 24px;
+}
+
+.shopping-timer--small .shopping-timer-bar {
+  height: 4px;
+}
+
+.shopping-timer--small .shopping-timer-warning {
+  font-size: 10px;
+}
+
+/* Średni timer (domyślny) */
+.shopping-timer--medium .shopping-timer-title {
+  font-size: 14px;
+}
+
+.shopping-timer--medium .shopping-timer-value {
+  font-size: 32px;
+}
+
+.shopping-timer--medium .shopping-timer-bar {
+  height: 6px;
+}
+
+.shopping-timer--medium .shopping-timer-warning {
+  font-size: 12px;
+}
+
+/* Duży timer */
+.shopping-timer--large .shopping-timer-title {
+  font-size: 16px;
+}
+
+.shopping-timer--large .shopping-timer-value {
+  font-size: 40px;
+}
+
+.shopping-timer--large .shopping-timer-bar {
+  height: 8px;
+}
+
+.shopping-timer--large .shopping-timer-warning {
+  font-size: 14px;
+}
+
+/* Responsywność */
+@media (max-width: 480px) {
+  .shopping-timer--medium .shopping-timer-value,
+  .shopping-timer--large .shopping-timer-value {
+    font-size: 28px;
+  }
+}

@@ -1,0 +1,65 @@
+/* Główny kontener siatki produktów */
+.product-grid {
+  display: grid;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+/* Różne rozmiary siatki */
+
+/* Mała siatka - więcej, mniejszych produktów */
+.product-grid--small {
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+/* Średnia siatka - domyślny rozmiar */
+.product-grid--medium {
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+/* Duża siatka - mniej, większych produktów */
+.product-grid--large {
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 32px;
+}
+
+/* Komunikat o braku produktów */
+.empty-products-message {
+  text-align: center;
+  padding: 32px;
+  background-color: #f9fafb;
+  border-radius: 8px;
+  color: #6b7280;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* Responsywność */
+
+@media (max-width: 768px) {
+  .product-grid {
+    gap: 16px;
+  }
+  
+  .product-grid--small {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+  
+  .product-grid--medium {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
+  
+  .product-grid--large {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .product-grid--small,
+  .product-grid--medium,
+  .product-grid--large {
+    grid-template-columns: 1fr;
+  }
+}

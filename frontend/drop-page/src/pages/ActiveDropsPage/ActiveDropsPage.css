@@ -1,0 +1,352 @@
+/* Strona aktywnych dropów */
+.active-drops-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Zawartość główna */
+  .active-drops-content {
+    flex: 1 0 auto;
+    padding: 40px 0;
+    background-color: #f9fafb;
+  }
+  
+  /* Tytuł strony */
+  .page-title {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 32px;
+    color: #111827;
+    text-align: center;
+  }
+  
+  /* Filtry i sortowanie */
+  .drops-filter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding: 16px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .filter-select {
+    padding: 8px 16px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    background-color: white;
+    font-size: 14px;
+  }
+  
+  /* Siatka dropów */
+  .active-drops-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+    margin-bottom: 48px;
+  }
+  
+  /* Karta aktywnego dropu */
+  .active-drop-card {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  
+  .active-drop-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Zdjęcie dropu */
+  .drop-image {
+    height: 180px;
+    background-color: #f3f4f6;
+    position: relative;
+  }
+  
+  .drop-image-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(110deg, #f5f5f5 8%, #eeeeee 18%, #f5f5f5 33%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s linear infinite;
+  }
+  
+  @keyframes shimmer {
+    0% {
+      background-position: -100% 0;
+    }
+    100% {
+      background-position: 100% 0;
+    }
+  }
+  
+  /* Badge LIVE */
+  .drop-live-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background-color: #ef4444;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 700;
+    animation: pulse 2s infinite;
+  }
+  
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6);
+    }
+    70% {
+      box-shadow: 0 0 0 6px rgba(239, 68, 68, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+    }
+  }
+  
+  /* Informacje o dropie */
+  .drop-info {
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Nazwa dropu */
+  .drop-name {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #111827;
+  }
+  
+  /* Informacje o czasie dropu */
+  .drop-time-info {
+    display: flex;
+    background-color: #f8fafc;
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin-bottom: 12px;
+  }
+  
+  .drop-time-remaining {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .time-label {
+    font-size: 12px;
+    color: #6b7280;
+  }
+  
+  .time-value {
+    font-size: 16px;
+    font-weight: 600;
+    color: #ef4444;
+  }
+  
+  /* Opis dropu */
+  .drop-description {
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 16px;
+    line-height: 1.5;
+    flex-grow: 1;
+  }
+  
+  /* Wiersz statystyk */
+  .drop-stats-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  
+  /* Pojedyncza statystyka */
+  .drop-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .stat-value {
+    font-size: 16px;
+    font-weight: 600;
+    color: #111827;
+  }
+  
+  .stat-label {
+    font-size: 12px;
+    color: #6b7280;
+  }
+  
+  /* Pasek dostępności */
+  .availability-bar {
+    height: 6px;
+    background-color: #e5e7eb;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+  
+  .availability-progress {
+    height: 100%;
+    background-color: #10b981;
+    border-radius: 3px;
+    transition: width 0.3s ease;
+  }
+  
+  /* Przycisk dołączenia do dropu */
+  .join-drop-button {
+    background-color: #2563eb;
+    color: white;
+    text-align: center;
+    border: none;
+    border-radius: 6px;
+    padding: 12px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    width: 100%;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .join-drop-button:hover {
+    background-color: #1d4ed8;
+  }
+  
+  /* Stan braku aktywnych dropów */
+  .no-drops-container {
+    background-color: white;
+    border-radius: 12px;
+    padding: 48px 24px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 48px;
+  }
+  
+  .no-drops-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+  }
+  
+  .no-drops-container h2 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #111827;
+  }
+  
+  .no-drops-container p {
+    font-size: 16px;
+    color: #6b7280;
+    max-width: 400px;
+    margin: 0 auto 24px;
+  }
+  
+  .view-upcoming-button {
+    display: inline-block;
+    background-color: #2563eb;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.2s;
+  }
+  
+  .view-upcoming-button:hover {
+    background-color: #1d4ed8;
+  }
+  
+  /* Sekcja informacyjna */
+  .active-drops-info {
+    background-color: white;
+    border-radius: 12px;
+    padding: 32px;
+    margin-top: 32px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .active-drops-info h2 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: #111827;
+  }
+  
+  .active-drops-info ol {
+    margin-left: 24px;
+    margin-bottom: 24px;
+  }
+  
+  .active-drops-info li {
+    font-size: 16px;
+    color: #4b5563;
+    line-height: 1.6;
+    margin-bottom: 8px;
+  }
+  
+  .active-drops-info p {
+    font-size: 16px;
+    color: #4b5563;
+    line-height: 1.6;
+  }
+  
+  /* Loader */
+  .loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+  }
+  
+  .loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(37, 99, 235, 0.2);
+    border-radius: 50%;
+    border-left-color: #2563eb;
+    animation: spin 1s linear infinite;
+    margin-bottom: 16px;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  /* Responsywność */
+  @media (max-width: 768px) {
+    .active-drops-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .drops-filter {
+      flex-direction: column;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    
+    .page-title {
+      font-size: 28px;
+    }
+    
+    .active-drops-info {
+      padding: 24px;
+    }
+  }

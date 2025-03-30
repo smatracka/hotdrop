@@ -1,0 +1,133 @@
+/* Stopka strony */
+.page-footer {
+  background-color: #f8fafc;
+  border-top: 1px solid #e5e7eb;
+  padding: 48px 0 24px;
+  margin-top: auto;
+}
+
+/* Sekcje w stopce */
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+/* Pojedyncza sekcja */
+.footer-section {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Tytuł sekcji */
+.footer-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #111827;
+}
+
+/* Opis w pierwszej sekcji */
+.footer-description {
+  font-size: 14px;
+  color: #6b7280;
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+/* Lista linków */
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 8px;
+}
+
+/* Link w stopce */
+.footer-link {
+  color: #6b7280;
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.2s;
+}
+
+.footer-link:hover {
+  color: #2563eb;
+}
+
+/* Informacje kontaktowe */
+.footer-contact-info {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Pojedynczy element kontaktowy */
+.footer-contact-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.footer-contact-item svg {
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+
+/* Dolna część stopki */
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 24px;
+  border-top: 1px solid #e5e7eb;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+/* Copyright */
+.copyright {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+/* Linki prawne */
+.footer-legal-links {
+  display: flex;
+  gap: 24px;
+}
+
+/* Responsywność */
+@media (max-width: 768px) {
+  .footer-content {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 24px;
+  }
+  
+  .footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .footer-legal-links {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-footer {
+    padding: 32px 0 16px;
+  }
+  
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}

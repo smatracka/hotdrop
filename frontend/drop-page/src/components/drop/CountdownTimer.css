@@ -1,0 +1,132 @@
+/* Główny kontener licznika */
+.countdown-timer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, Oxygen, sans-serif;
+}
+
+/* Pojedynczy element licznika (dni, godziny, minuty, sekundy) */
+.countdown-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Wartość liczbowa */
+.countdown-value {
+  background-color: white;
+  border-radius: 8px;
+  min-width: 60px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  font-weight: 700;
+}
+
+/* Etykieta jednostki czasu */
+.countdown-label {
+  font-size: 14px;
+  color: #666;
+  margin-top: 4px;
+}
+
+/* Separator (dwukropek) */
+.countdown-separator {
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  margin-top: -16px; /* Kompensacja dla .countdown-label */
+}
+
+/* Komunikat po zakończeniu odliczania */
+.countdown-expired {
+  font-weight: 600;
+  font-size: 18px;
+  color: #ef4444;
+  text-align: center;
+  padding: 12px;
+}
+
+/* Warianty rozmiarów */
+
+/* Mały licznik */
+.countdown-timer--small .countdown-value {
+  font-size: 24px;
+  padding: 4px 8px;
+  min-width: 40px;
+}
+
+.countdown-timer--small .countdown-label {
+  font-size: 12px;
+}
+
+.countdown-timer--small .countdown-separator {
+  font-size: 24px;
+  margin-top: -12px;
+}
+
+/* Średni licznik (domyślny) */
+.countdown-timer--medium .countdown-value {
+  font-size: 36px;
+  padding: 8px 16px;
+  min-width: 60px;
+}
+
+.countdown-timer--medium .countdown-label {
+  font-size: 14px;
+}
+
+.countdown-timer--medium .countdown-separator {
+  font-size: 36px;
+  margin-top: -16px;
+}
+
+/* Duży licznik */
+.countdown-timer--large .countdown-value {
+  font-size: 48px;
+  padding: 12px 24px;
+  min-width: 80px;
+}
+
+.countdown-timer--large .countdown-label {
+  font-size: 16px;
+}
+
+.countdown-timer--large .countdown-separator {
+  font-size: 48px;
+  margin-top: -20px;
+}
+
+/* Responsywność */
+@media (max-width: 640px) {
+  /* Mniejsze wartości na małych ekranach */
+  .countdown-timer--medium .countdown-value,
+  .countdown-timer--large .countdown-value {
+    font-size: 28px;
+    padding: 6px 12px;
+    min-width: 50px;
+  }
+  
+  .countdown-timer--medium .countdown-separator,
+  .countdown-timer--large .countdown-separator {
+    font-size: 28px;
+    margin-top: -14px;
+  }
+  
+  .countdown-timer--medium .countdown-label,
+  .countdown-timer--large .countdown-label {
+    font-size: 12px;
+  }
+}
+
+/* Animacje */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.countdown-value:last-child {
+  animation: pulse 1s infinite;
+}

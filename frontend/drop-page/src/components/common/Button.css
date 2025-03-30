@@ -1,0 +1,139 @@
+/* Podstawowy styl przycisku */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+  border: none;
+  line-height: 1.5;
+}
+
+.button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Rozmiary przycisków */
+.button--small {
+  font-size: 12px;
+  padding: 6px 12px;
+  height: 30px;
+}
+
+.button--medium {
+  font-size: 14px;
+  padding: 8px 16px;
+  height: 36px;
+}
+
+.button--large {
+  font-size: 16px;
+  padding: 12px 24px;
+  height: 44px;
+}
+
+/* Warianty przycisków */
+.button--primary {
+  background-color: #2563eb;
+  color: white;
+}
+
+.button--primary:hover:not(:disabled) {
+  background-color: #1d4ed8;
+}
+
+.button--primary:active:not(:disabled) {
+  background-color: #1e40af;
+}
+
+.button--secondary {
+  background-color: #10b981;
+  color: white;
+}
+
+.button--secondary:hover:not(:disabled) {
+  background-color: #059669;
+}
+
+.button--secondary:active:not(:disabled) {
+  background-color: #047857;
+}
+
+.button--outline {
+  background-color: transparent;
+  color: #2563eb;
+  border: 1px solid #2563eb;
+}
+
+.button--outline:hover:not(:disabled) {
+  background-color: #eff6ff;
+}
+
+.button--outline:active:not(:disabled) {
+  background-color: #dbeafe;
+}
+
+.button--text {
+  background-color: transparent;
+  color: #2563eb;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+.button--text:hover:not(:disabled) {
+  background-color: #eff6ff;
+}
+
+.button--text:active:not(:disabled) {
+  background-color: #dbeafe;
+}
+
+.button--danger {
+  background-color: #ef4444;
+  color: white;
+}
+
+.button--danger:hover:not(:disabled) {
+  background-color: #dc2626;
+}
+
+.button--danger:active:not(:disabled) {
+  background-color: #b91c1c;
+}
+
+/* Przycisk na pełną szerokość */
+.button--full-width {
+  width: 100%;
+}
+
+/* Przycisk z ikoną */
+.button--with-icon {
+  gap: 8px;
+}
+
+.button__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Stany aktywne, focus, hover */
+.button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+/* Responsywność */
+@media (max-width: 480px) {
+  .button--large {
+    padding: 10px 16px;
+    height: 40px;
+  }
+}

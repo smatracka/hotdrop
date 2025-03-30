@@ -1,0 +1,305 @@
+/* Główny kontener strony */
+.thank-you-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Zawartość główna */
+.thank-you-content {
+  flex: 1 0 auto;
+  padding: 40px 0 60px;
+}
+
+/* Główny kontener podziękowań */
+.thank-you-container {
+  max-width: 700px;
+  margin: 0 auto;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+/* Nagłówek z podziękowaniem */
+.thank-you-header {
+  background-color: #f0f9ff;
+  padding: 40px 24px;
+  text-align: center;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* Ikona sukcesu */
+.success-icon {
+  width: 72px;
+  height: 72px;
+  background-color: #d1fae5;
+  color: #10b981;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+}
+
+/* Tytuł podziękowań */
+.thank-you-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 8px;
+}
+
+/* Podtytuł podziękowań */
+.thank-you-subtitle {
+  font-size: 16px;
+  color: #6b7280;
+}
+
+/* Sekcja szczegółów zamówienia */
+.order-details-section {
+  padding: 24px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* Tytuł sekcji */
+.section-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 16px;
+}
+
+/* Tabela szczegółów zamówienia */
+.order-details {
+  background-color: #f9fafb;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+/* Wiersz szczegółu */
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  font-size: 14px;
+}
+
+.detail-row:not(:last-child) {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* Etykieta szczegółu */
+.detail-label {
+  color: #6b7280;
+  font-weight: 500;
+}
+
+/* Wartość szczegółu */
+.detail-value {
+  font-weight: 600;
+  color: #111827;
+}
+
+/* Status przetwarzania */
+.status-processing {
+  color: #f59e0b;
+}
+
+/* Wiadomość końcowa */
+.order-message {
+  padding: 24px;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #4b5563;
+}
+
+.order-message p:not(:last-child) {
+  margin-bottom: 12px;
+}
+
+/* Sekcja przycisków i akcji */
+.actions-section {
+  padding: 24px;
+  text-align: center;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* Główny przycisk */
+.primary-button {
+  padding: 12px 24px;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-bottom: 16px;
+}
+
+.primary-button:hover {
+  background-color: #1d4ed8;
+}
+
+/* Dodatkowe akcje */
+.secondary-actions {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+}
+
+/* Link drugorzędny */
+.secondary-link {
+  color: #6b7280;
+  font-size: 14px;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.secondary-link:hover {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+/* Sekcja promocji */
+.promotion-section {
+  padding: 24px;
+  text-align: center;
+  background-color: #f9fafb;
+}
+
+/* Nadchodzące dropy */
+.upcoming-drops {
+  margin-top: 16px;
+  line-height: 1.6;
+  color: #4b5563;
+}
+
+/* Link do nadchodzących dropów */
+.upcoming-drops-link {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 8px 16px;
+  background-color: #fff;
+  color: #2563eb;
+  border: 1px solid #2563eb;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.upcoming-drops-link:hover {
+  background-color: #eff6ff;
+}
+
+/* Stany ładowania */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  text-align: center;
+}
+
+.loading-spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid rgba(37, 99, 235, 0.1);
+  border-radius: 50%;
+  border-left-color: #2563eb;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Komunikaty błędu */
+.error-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  text-align: center;
+  padding: 32px;
+  background-color: #fef2f2;
+  border-radius: 12px;
+}
+
+.error-icon {
+  color: #ef4444;
+  margin-bottom: 16px;
+}
+
+.error-container h2 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #111827;
+}
+
+.error-container p {
+  margin-bottom: 24px;
+  color: #4b5563;
+}
+
+/* Responsywność */
+@media (max-width: 768px) {
+  .thank-you-content {
+    padding: 24px 0 40px;
+  }
+  
+  .thank-you-header {
+    padding: 32px 16px;
+  }
+  
+  .success-icon {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 16px;
+  }
+  
+  .thank-you-title {
+    font-size: 24px;
+  }
+  
+  .secondary-actions {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .thank-you-content {
+    padding: 16px 0 32px;
+  }
+  
+  .thank-you-header {
+    padding: 24px 16px;
+  }
+  
+  .success-icon {
+    width: 56px;
+    height: 56px;
+  }
+  
+  .thank-you-title {
+    font-size: 20px;
+  }
+  
+  .order-details-section,
+  .order-message,
+  .actions-section,
+  .promotion-section {
+    padding: 16px;
+  }
+}
