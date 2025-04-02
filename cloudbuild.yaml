@@ -1,0 +1,76 @@
+steps:
+  # Build backend
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/hot-drop-454308/drop-commerce-backend', './backend']
+    dir: '.'
+
+  # Build frontend
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/hot-drop-454308/drop-commerce-frontend', './frontend']
+    dir: '.'
+
+  # Push backend image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/hot-drop-454308/drop-commerce-backend']
+
+  # Push frontend image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/hot-drop-454308/drop-commerce-frontend']
+
+  # Deploy backend to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'deploy'
+      - 'drop-commerce-backend'
+      - '--image'
+      - 'gcr.io/hot-drop-454308/drop-commerce-backend'
+      - '--region'
+      - 'us-central1'
+      - '--platform'
+      - 'managed'
+      - '--allow-unauthenticated'
+      - '--set-secrets'
+      - '/MONGODB_URI=mongodb-uri:latest,/REDIS_URI=redis-uri:latest,/JWT_SECRET=jwt-secret:latest'
+      - '--min-instances'
+      - '1'
+      - '--max-instances'
+      - '10'
+      - '--cpu'
+      - '1'
+      - '--memory'
+      - '2Gi'
+      - '--timeout'
+      - '300'
+
+  # Deploy frontend to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'deploy'
+      - 'drop-commerce-frontend'
+      - '--image'
+      - 'gcr.io/hot-drop-454308/drop-commerce-frontend'
+      - '--region'
+      - 'us-central1'
+      - '--platform'
+      - 'managed'
+      - '--allow-unauthenticated'
+      - '--set-env-vars'
+      - 'NEXT_PUBLIC_API_URL=https://drop-commerce-backend-hot-drop-454308.uc.a.run.app,NEXT_PUBLIC_WS_URL=wss://drop-commerce-backend-hot-drop-454308.uc.a.run.app'
+      - '--min-instances'
+      - '1'
+      - '--max-instances'
+      - '10'
+      - '--cpu'
+      - '1'
+      - '--memory'
+      - '1Gi'
+      - '--timeout'
+      - '300'
+
+images:
+  - 'gcr.io/hot-drop-454308/drop-commerce-backend'
+  - 'gcr.io/hot-drop-454308/drop-commerce-frontend' 

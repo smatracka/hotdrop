@@ -1,0 +1,63 @@
+apiVersion: monitoring.googleapis.com/v1
+kind: Dashboard
+metadata:
+  name: hot-drop-dashboard
+spec:
+  displayName: Hot Drop Dashboard
+  gridLayout:
+    columns: 2
+    widgets:
+      - title: "HTTP Request Rate"
+        xyChart:
+          dataSets:
+            - timeSeriesQuery:
+                timeSeriesFilter:
+                  filter: metric.type="run.googleapis.com/request_count"
+                  aggregation:
+                    alignmentPeriod: 60s
+                    perSeriesAligner: ALIGN_RATE
+      - title: "CPU Usage"
+        xyChart:
+          dataSets:
+            - timeSeriesQuery:
+                timeSeriesFilter:
+                  filter: metric.type="run.googleapis.com/container/cpu/utilization"
+                  aggregation:
+                    alignmentPeriod: 60s
+                    perSeriesAligner: ALIGN_MEAN
+      - title: "Memory Usage"
+        xyChart:
+          dataSets:
+            - timeSeriesQuery:
+                timeSeriesFilter:
+                  filter: metric.type="run.googleapis.com/container/memory/utilization"
+                  aggregation:
+                    alignmentPeriod: 60s
+                    perSeriesAligner: ALIGN_MEAN
+      - title: "WebSocket Connections"
+        xyChart:
+          dataSets:
+            - timeSeriesQuery:
+                timeSeriesFilter:
+                  filter: metric.type="custom.googleapis.com/websocket_connections"
+                  aggregation:
+                    alignmentPeriod: 60s
+                    perSeriesAligner: ALIGN_MEAN
+      - title: "Queue Size"
+        xyChart:
+          dataSets:
+            - timeSeriesQuery:
+                timeSeriesFilter:
+                  filter: metric.type="custom.googleapis.com/queue_size"
+                  aggregation:
+                    alignmentPeriod: 60s
+                    perSeriesAligner: ALIGN_MEAN
+      - title: "Cache Hit Rate"
+        xyChart:
+          dataSets:
+            - timeSeriesQuery:
+                timeSeriesFilter:
+                  filter: metric.type="custom.googleapis.com/cache_hit_rate"
+                  aggregation:
+                    alignmentPeriod: 60s
+                    perSeriesAligner: ALIGN_MEAN 

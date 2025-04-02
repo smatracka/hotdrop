@@ -3,26 +3,60 @@ const express = require('express');
 const router = express.Router();
 const dropController = require('../controllers/drop');
 const authMiddleware = require('../middlewares/auth');
+const { validate, dropValidationRules, queueValidationRules, cartReservationValidationRules } = require('../middlewares/validation');
+const { body } = require('express-validator');
 
-// Middleware do sprawdzania autoryzacji
-//router.use(authMiddleware.protect);
+// Middleware for authentication
+router.use(authMiddleware.protect);
 
-// Pobiera wszystkie dropy sprzedawcy
+// Drop Management
 router.get('/seller/:sellerId', dropController.getDrops);
-
-// Pobiera szczegóły dropu
 router.get('/:id', dropController.getDrop);
 
-// Tworzy nowy drop
-router.post('/', dropController.createDrop);
+// Create drop with validation
+router.post('/', [
+  ...dropValidationRules.map(rule => body(rule.field, ...rule.rules)),
+  validate
+], dropController.createDrop);
 
-// Aktualizuje drop
-router.put('/:id', dropController.updateDrop);
+// Update drop with validation
+router.put('/:id', [
+  ...dropValidationRules.map(rule => body(rule.field, ...rule.rules).optional()),
+  validate
+], dropController.updateDrop);
 
-// Publikuje drop
 router.post('/:id/publish', dropController.publishDrop);
-
-// Usuwa drop
 router.delete('/:id', dropController.deleteDrop);
+
+// Drop Page Management
+router.post('/:id/pages', dropController.createDropPage);
+
+// Queue Management
+router.get('/:dropId/queue', dropController.getQueue);
+
+// Initialize queue with validation
+router.post('/:dropId/queue', [
+  ...queueValidationRules.map(rule => body(rule.field, ...rule.rules)),
+  validate
+], dropController.initializeQueue);
+
+// Update queue with validation
+router.put('/:dropId/queue', [
+  ...queueValidationRules.map(rule => body(rule.field, ...rule.rules).optional()),
+  validate
+], dropController.updateQueue);
+
+router.post('/:dropId/queue/join', dropController.joinQueue);
+router.post('/:dropId/queue/leave', dropController.leaveQueue);
+
+// Cart Reservation
+// Create cart reservation with validation
+router.post('/:dropId/cart-reservations', [
+  ...cartReservationValidationRules.map(rule => body(rule.field, ...rule.rules)),
+  validate
+], dropController.createCartReservation);
+
+router.get('/cart-reservations/:reservationId', dropController.getCartReservation);
+router.put('/cart-reservations/:reservationId', dropController.updateCartReservation);
 
 module.exports = router;
